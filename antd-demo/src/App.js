@@ -4,7 +4,13 @@ import './App.css';
 
 class HelloWorld extends React.Component {
     render () {
-        return <div>Hello World ...</div>;
+        const MAX_NUMBER = 11111;
+        return <div>Hello World ... 
+            <br></br>
+            <span className={MAX_NUMBER} tabIndex="22222">number</span>
+            <br></br>
+            <span>{MAX_NUMBER}</span> 
+        </div>;
     }
 }
 
