@@ -1,0 +1,249 @@
+<@customerBreadCrumbsTag method="breadCrumbsInfo">
+<style type="text/css">
+    /* operation aside v1 ^^^^ */
+    .opration-aside * {
+        box-sizing: border-box;
+    }
+    .admin-layout-v1 {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .main-wrap-v1 {
+        display: flex;
+        flex-grow: 1;
+    }
+    .opration-aside {
+        display: flex;
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 14px;
+    }
+    .operation-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 90px;
+        margin-top: -1px;
+        padding-top: 8px;
+        color: rgba(212, 212, 212, 0.996);
+        background: #1e2834;
+    }
+    .operation-menu li {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        padding-left: 16px;
+        cursor: pointer;
+    }
+    .operation-menu li a {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        color: rgba(212, 212, 212, 0.996);
+    }
+    .operation-menu li:not(.null):hover {
+        background: rgba(255,255,255,0.6);
+    }
+    .operation-menu .operation-menu-list li.active {
+        color: #273543;
+        background: #fff;
+    }
+    .operation-menu li.active a {
+        color: #333;
+    }
+    .operation-menu li:not(.null):hover a {
+        color: #273543;
+    }
+    .operation-menu li i {
+        flex-shrink: 0;
+        width: 24px;
+        text-align: left;
+    }
+    .operation-menu-list li span {
+        white-space: nowrap;
+    }
+    .operation-menu-option {
+        display: flex;
+        align-items: center;
+        height: 40px;
+        padding-left: 16px;
+        cursor: pointer;
+    }
+    .operation-menu-option i {
+        width: 22px;
+        font-size: 18px;
+        text-align: left;
+    }
+    .operation-menu-option:hover {
+        color: #fff;
+    }
+    .operation-submenu {
+        position: relative;
+        width: 130px;
+        height: calc(100vh - 51px);
+        padding-top: 7px;
+        padding-bottom: 40px;
+        color: #666;
+        background: #fff;
+    }
+    .operation-submenu::-webkit-scrollbar{
+        display: none;
+    }
+    .operation-submenu-box {
+        height: 100%;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+    .operation-submenu-box::-webkit-scrollbar{
+        display: none;
+    }
+    .operation-content-v1 {
+        flex-grow: 1;
+        height: calc(100vh - 51px);
+        padding: 0 8px;
+        overflow: auto;
+    }
+    .operation-submenu-item {
+        display: flex;
+        flex-direction: column;
+        margin-left: 8px;
+    }
+    .operation-submenu-item a {
+        color: #666;
+    }
+    .operation-submenu-item a:hover {
+        color: #0070cc;
+    }
+    .operation-submenu-collapse:hover .operation-submenu-hd {
+        color: #666;
+    }
+    .operation-submenu-hd {
+        display: flex;
+        height: 40px;
+        align-items: center;
+    }
+    .operation-submenu-hd i {
+        flex-shrink: 0;
+        width: 16px;
+        font-size: 16px;
+        transform: rotate(180deg);
+        transition: transform 0.1s;
+    }
+    .operation-submenu-hd span {
+        white-space: nowrap;
+    }
+    .operation-submenu-bd {
+        transition: max-height 0.1s;
+        overflow: hidden;
+    }
+    .operation-submenu-bd li {
+        display: flex;
+        align-items: center;
+        height: 40px;
+    }
+    .operation-submenu-bd li i {
+        position: absolute;
+        right: 4px;
+        top: 5px;
+        display: block;
+        /*min-width: 24px;*/
+        padding: 2px 4px;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: right;
+        border-radius: 3px;
+        color: #fff;
+        background: rgba(228, 57, 60, 0.8);
+    }
+    .operation-submenu-bd a {
+        position: relative;
+        display: flex;
+        width: 100%;
+        padding: 5px 0 5px 24px;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .operation-submenu-bd a:hover {
+        background: rgba(235, 237, 240, 0.96);
+    }
+    .operation-submenu-item.active .operation-submenu-hd i {
+        transform: rotate(90deg);
+    }
+    .operation-submenu-item.active .operation-submenu-bd {
+        max-height: 0 !important;
+    }
+    .operation-submenu-list {
+        display: none;
+    }
+    .operation-submenu-list.active {
+        display: block;
+    }
+    .operation-menu-list {
+        height: calc(100vh - 99px);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    .operation-menu-list::-webkit-scrollbar {
+        display: none;
+    }
+    .quick-submenu-btn {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        right: 0;
+        bottom: 0px;
+        z-index: 100;
+        display: flex;
+        height: 40px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        display: none;
+        background: #fff;
+    }
+    .quick-submenu-btn i {
+        font-size: 22px;
+    }
+    /* operation aside v1 $$$$ */
+</style>
+<aside class="opration-aside">
+    <section class="operation-menu">
+        <ul class="operation-menu-list">
+            <#if (breadCrumbsInfo.treeNodes?? && breadCrumbsInfo.treeNodes?size > 0)>
+                <#list breadCrumbsInfo.treeNodes as firstLevel>
+                    <li class="<#if firstLevel.selected == true>active</#if>">
+                        <a href="##"><i class="iconfont">${firstLevel.icon!''}</i><span>${firstLevel.name!''}</span></a>
+                    </li>
+                </#list>
+            </#if>
+        </ul>
+        <div class="operation-menu-option"><i class="iconfont">&#xe93c;</i><span>设置</span></div>
+    </section>
+    <section class="operation-submenu">
+        <div class="operation-submenu-box">
+            <#if (breadCrumbsInfo.treeNodes?? && breadCrumbsInfo.treeNodes?size > 0)>
+                <#list breadCrumbsInfo.treeNodes as firstLevel>
+                    <div class="operation-submenu-list <#if firstLevel.selected == true>active</#if>">
+                        <#list firstLevel.children as secondLevel>
+                            <div class="operation-submenu-item">
+                                <a class="operation-submenu-hd" href="<#if (secondLevel.children?size > 0)>javascript:void(0)<#else>${secondLevel.url!''}</#if>">
+                                    <i class="iconfont"><#if (secondLevel.children?size > 0)>&#xe619;</#if></i><span>${secondLevel.name!''}</span>
+                                </a>
+                                <#if (secondLevel.children?size > 0)>
+                                    <ul class="operation-submenu-bd" style="max-height: ${secondLevel.children?size * 40}px">
+                                        <#list secondLevel.children as thirdLevel>
+                                            <li><a href="${thirdLevel.url!''}"><span>${thirdLevel.name!''}</span></a></li>
+                                        </#list>
+                                    </ul>
+                                </#if>
+                            </div>
+                        </#list>
+                    </div>
+                </#list>
+            </#if>
+        </div>
+        <div class="quick-submenu-btn"><i class="iconfont">&#xe653;</i></div>
+    </section>
+</aside>
+</@customerBreadCrumbsTag>

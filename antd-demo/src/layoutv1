@@ -1,0 +1,1227 @@
+<#macro page load_fun = ''
+head_title = ''
+footer_url = ''
+extent_css = ''
+page_name = ''
+page_url = ''
+tippy_version = ''
+page_url_title = ''>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${head_title}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <link href="${staticPath}/layui-v2.4/css/layui.css" rel="stylesheet" type="text/css"/>
+    <link href="${staticPath}/css/admin.css" rel="stylesheet" type="text/css"/>
+    <link href="${staticPath}/css/operation.css" rel="stylesheet" type="text/css"/>
+    <link href="/upload/logo/favorites_icon.png" rel="shortcut icon" type="image/x-icon">
+    <#--<link rel="stylesheet" href="${basePath}/static/work-queue/css/common.css?v=${jsVersion}">-->
+    <#--<link href="https://cdn.bootcss.com/jScrollPane/2.1.3-rc.1/style/jquery.jscrollpane.css" rel="stylesheet">-->
+    <script type="text/javascript" src="${staticPath}/layui-v2.4/layui.js?v=${jsVersion}"></script>
+    <script type="text/javascript" src="${staticPath}/script/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="${staticPath}/script/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="${staticPath}/script/gks-util.js?v=${jsVersion}"></script>
+    <script type="text/javascript" src="${staticPath}/script/checkLogin.js?v=${jsVersion}"></script>
+
+    <script type="text/javascript" src="${staticPath}/script/queue.js"></script>
+
+    <#if tippy_version == 'v2'>
+        <link href="${staticPath}/css/tippy-v2.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="${staticPath}/script/popper-v2.js?v=${jsVersion}"></script>
+        <script type="text/javascript" src="${staticPath}/script/tippy-v2.js?v=${jsVersion}"></script>
+    <#else>
+        <link href="${staticPath}/css/tiippy.themes.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="${staticPath}/script/popper.js?v=${jsVersion}"></script>
+        <script type="text/javascript" src="${staticPath}/script/tippy.js?v=${jsVersion}"></script>
+    </#if>
+    <#--<script type="text/javascript" src="http://jscrollpane.kelvinluck.com/script/jquery.mousewheel.js"></script>-->
+    <#--<script type="text/javascript" src="${staticPath}/script/jquery.jscrollpane.js?v=${jsVersion}"></script>-->
+<#--<script type="text/javascript" src="${staticPath}/script/jquery.resizeEnd.js?v=${jsVersion}"></script>-->
+<#--<script type="text/javascript" src="${staticPath}/script/jquery-scrolltofixed.js?v=${jsVersion}"></script>-->
+<#--<script type="text/javascript" src="${staticPath}/script/stickUp.js?v=${jsVersion}"></script>-->
+    <script type="text/javascript">
+        layui.config({base:'${staticPath}/script/', version: false})
+    </script>
+    <#if extent_css!=''><#include "${extent_css}"></#if>
+</head>
+<style type="text/css">
+    .tag_top {
+        display: none;
+    }
+    .gks_manage .layui-bg-black {
+        background: #fff !important;
+    }
+</style>
+<body onload="${load_fun}">
+<div class="layui-layout layui-layout-admin gks_manage admin-layout-v1">
+    <#if page_name=="user">
+        <div class="personal-layout">
+            <#include "../shortcut.ftl">
+            <#include "header.ftl">
+        </div>
+    <#--个人中心-->
+        <div class="seller-center">
+            <div class="ui_layout clear">
+                <div class="ceter-wrapper"></div>
+                <#include "left.ftl">
+                <div class="seller-center-main">
+                    <div class="center-box-inner">
+                        <div class="center-box-width">
+                        <#-- 内容开始 -->
+                            <#nested>
+                            <div class="clear"></div>
+                        <#-- 内容结束 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </#if>
+    <#if page_name=="company">
+        <div class="personal-layout">
+            <#include "../shortcut.ftl">
+            <#include "header.ftl">
+        </div>
+    <#--买家中心-->
+        <div class="seller-center">
+            <div class="ui_layout clear">
+                <div class="ceter-wrapper"></div>
+                <#include "left.ftl">
+                <div class="seller-center-main">
+                    <div class="center-box-inner">
+                        <div class="center-box-width">
+                        <#-- 内容开始 -->
+                            <#nested>
+                            <div class="clear"></div>
+                        <#-- 内容结束 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </#if>
+    <#if page_name=="shop">
+        <#include "../shortcut.ftl">
+        <#include "header.ftl">
+    <#--卖家中心-->
+        <#include "left.ftl">
+        <div class="layui-tab layui-tab-brief" lay-filter="demoTitle">
+            <div class="layui-body gks_body_bg">
+                <div class="layui-main">
+                    <div class="inner">
+                        <div class="gks_body_box">
+                            <div class="inner">
+                            <#-- 内容开始 -->
+                                <#nested>
+                                <div class="clear"></div>
+                            <#-- 内容结束 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </#if>
+    <#if page_name=="operation">
+
+
+<#--        <#include "../shortcut.ftl">-->
+<#--        <#include "header.ftl">-->
+    <#--运营中心-->
+<#--        <#breadCrumbsInfo.menuDtos as list>-->
+        <script type="text/javascript">
+            $(function() {
+                // 侧边栏二级菜单展开收起
+                $('.opration-aside').on('click', '.operation-submenu-hd', function() {
+                    $(this).parent().toggleClass('active');
+                    checkQuickScrollBox();
+                });
+
+                // 鼠标移入一级菜单，二级出现
+                $('.operation-menu-list li').on('mouseenter', function() {
+                    var $this = $(this);
+                    var index = $this.index();
+                    $('.operation-submenu-list').eq(index).addClass('active').siblings().removeClass('active');
+                    checkQuickScrollBox();
+                });
+                $('.opration-aside').on('mouseleave', function() {
+                    var index = $('.operation-menu-list .active').index();
+                    $('.operation-submenu-list').eq(index).addClass('active').siblings().removeClass('active');
+                    checkQuickScrollBox();
+                });
+
+                // 二级菜单快速滚动到底部
+                $('.quick-submenu-btn').on('click', function() {
+                    var $subMenu = $('.operation-submenu-box');
+                    var $subMenuActive = $('.operation-submenu .active');
+                    var subMenuHeight = $subMenu.height();
+                    var activeHeight = $subMenuActive.height();
+                    $subMenu.animate({ scrollTop: activeHeight - subMenuHeight }, 100);
+                    $('.quick-submenu-btn').hide();
+                });
+                $('.operation-submenu-box').on('scroll', function() {
+                    var $subMenu = $('.operation-submenu-box');
+                    var $subMenuActive = $('.operation-submenu .active');
+                    var subMenuHeight = $subMenu.height();
+                    var activeHeight = $subMenuActive.height();
+                    if ($subMenu.scrollTop() >= activeHeight - subMenuHeight) {
+                        $('.quick-submenu-btn').hide();
+                    } else {
+                        $('.quick-submenu-btn').css('display', 'flex');
+                    }
+                });
+
+                // 判断二级菜单是否出现快捷滚动按钮
+                function checkQuickScrollBox() {
+                    var $subMenu = $('.operation-submenu-box');
+                    var $subMenuActive = $('.operation-submenu .active');
+                    var subMenuHeight = $subMenu.height();
+                    var activeHeight = $subMenuActive.height();
+                    if (subMenuHeight < activeHeight) {
+                        $('.quick-submenu-btn').css('display', 'flex');
+                    } else {
+                        $('.quick-submenu-btn').hide();
+                    }
+                }
+                checkQuickScrollBox();
+
+
+                gks.appendOperationHeaderOptionV1 = function() {
+                    if ($('.operation-header-v1').length <= 0) { return; }
+                    var userInfoBox = '<div class="user-info-right">' +
+                        '<div class="operation-header-search"><i class="iconfont header-search-icon"></i>' +
+                        '<input class="header-search-input" type="text" placeholder="搜索功能菜单、单据号、帮助文档" value="">' +
+                        '<div class="header-close-icon" ><img  src="/static/images/operation-header-close1.png" style="display: none;"></div>' +
+                        '<div class="header-search-box" style="display: none;">' +
+                        '<ul class="search-box-list"></ul>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="quick-menu-wrap">' +
+                        '<a class="home" href="/">商城</a>' +
+                        '<a class="task" href="/approval/approval/index?taskType=2" target="_blank">待办<span id="J_taskNum"></span></a>' +
+                        '<a class="message" href="/message/message/message-list" target="_blank">消息<span id="J_messageNum"></span></a>' +
+                        '<div class="service">' +
+                        '<a class="o-header-service" href="http://q.url.cn/ABRGOl?_type=wpa&qidian=true" target="_blank" >客服</a>' +
+                        '<div class="service-box">' +
+                        '<div class="box">' +
+                        '<img src="/static/images/admin/women.png" alt="">' +
+                        '<ul class="box-left">' +
+                        '<li>专属客服</li>' +
+                        '<li>电话</li>' +
+                        '<li>QQ</li>' +
+                        '</ul>' +
+                        '<li class="businessName">-</li>' +
+                        '<li class="businessMobile">-</li>' +
+                        '<li class="businessQQ">-</li>' +
+                        '</ul>' +
+                        '<ul class="box-right">' +
+                        '<a class="inline-busi" href="http://q.url.cn/ABRGOl?_type=wpa&qidian=true" target="_blank">在线咨询</a>' +
+                        '</div>' +
+                        '<div class="box-tel">' +
+                        '<i class="iconfont ">&#xe90f;</i>' +
+                        '<span class="ques-tel">咨询热线</span>' +
+                        '<span class="tel">400-102-5068</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="header-help"><div class="help-box-hd">帮助</div><dl class="help-box-bd">' +
+                        '<dt><a href="/help/help/index" target="_blank">帮助中心</a></dt><dd><a href="/help/help/help-category-index" target="_blank">常见问题</a></dd>' +
+                        '<dd><a href="/help/help/help-operation-index" target="_blank">操作手册</a></dd></dl></div>' +
+                        '</div>' +
+                        '<div class="name">' +
+                        '<a href="/bi/dashboard/show-index" class="name-con" target="_blank"><i class="iconfont">&#xe74b;</i></a>' +
+                        '<div class="name-box">' +
+                        '<p class="login-out pd clear">' +
+                        '<i class="fl c999">上次登录：</i>' +
+                        '</p><h5 class="pd">我的信息</h5>' +
+                        '<ul class="my-info-list pd">' +
+                        '<li class="clear o-username">' +
+                        '<span class="tit">用户名</span>' +
+                        '<div class="con">' +
+                        '<input type="text" value="" disabled>' +
+                        '</div>' +
+                        '<i class="check"></i>' +
+                        '</li>' +
+                        '<li class="clear o-realname">' +
+                        '<span class="tit">真实姓名</span>' +
+                        '<div class="con">' +
+                        '<input type="text" value="" disabled>' +
+                        '<div class="layui-btn-group">' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small">' +
+                        '<i class="layui-icon">&#xe605;</i>' +
+                        '</span>' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small o-close">' +
+                        '<i class="layui-icon">&#x1006;</i>' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<i class="check">修改真实姓名</i>' +
+                        '</li>' +
+                        '<li class="clear o-othername">' +
+                        '<span class="tit">昵称</span>' +
+                        '<div class="con">' +
+                        '<input type="text" value="未填写" disabled>' +
+                        '<div class="layui-btn-group">' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small">' +
+                        '<i class="layui-icon">&#xe605;</i>' +
+                        '</span>' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small o-close">' +
+                        '<i class="layui-icon">&#x1006;</i>' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<i class="check">修改昵称</i>' +
+                        '</li>' +
+                        '<li class="clear o-party">' +
+                        '<span class="tit">部门</span>' +
+                        '<div class="con">' +
+                        '<input type="text" value="" disabled>' +
+                        '</div>' +
+                        '<i class="check"></i>' +
+                        '</li>' +
+                        '<li class="clear o-role">' +
+                        '<span class="tit">角色</span>' +
+                        '<div class="con layui-elip" title="">' +
+                        '<input type="text" value="" disabled>' +
+                        '</div>' +
+                        '<i class="check"></i>' +
+                        '</li>' +
+                        '<li class="clear o-referralCode" hidden>' +
+                        '<span class="tit">推荐码</span>' +
+                        '<div class="con layui-elip" title="">' +
+                        '<input type="text" value="" disabled>' +
+                        '</div>' +
+                        '<i class="check"></i>' +
+                        '</li>' +
+                        '</ul>' +
+                        '<h5 class="pd">账户安全</h5>' +
+                        '<ul class="my-safe pd">' +
+                        '<li class="clear o-phone">' +
+                        '<span class="tit">手机号码</span>' +
+                        '<div class="con">' +
+                        '<input type="text" value="" disabled>' +
+                        '<div class="layui-btn-group">\n' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small">' +
+                        '<i class="layui-icon">&#xe605;</i>' +
+                        '</span>' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small o-close">' +
+                        '<i class="layui-icon">&#x1006;</i>' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<i class="check">更换手机号</i>' +
+                        '</li>' +
+                        '<li class="clear o-email">' +
+                        '<span class="tit">绑定邮箱</span>' +
+                        '<div class="con">' +
+                        '<input type="text" value="" disabled>' +
+                        '<div class="layui-btn-group">' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small">' +
+                        '<i class="layui-icon">&#xe605;</i>' +
+                        '</span>' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small o-close">' +
+                        '<i class="layui-icon">&#x1006;</i>' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<i class="check">更换邮箱</i>' +
+                        '</li>' +
+                        '<li class="clear o-password">' +
+                        '<span class="tit">修改密码</span>' +
+                        '<div class="con">' +
+                        '<input type="text" value="请定期修改密码" disabled>' +
+                        '<div class="layui-btn-group">' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small">' +
+                        '<i class="layui-icon">&#xe605;</i>' +
+                        '</span>' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small o-close">' +
+                        '<i class="layui-icon">&#x1006;</i>' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<i class="check-password">修改密码</i>' +
+                        '</li>' +
+                        '<li class="clear o-qq">' +
+                        ' <span class="tit">qq</span>' +
+                        '<div class="con">' +
+                        '<input type="text" value="" disabled>' +
+                        ' <div class="layui-btn-group">' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small">' +
+                        '<i class="layui-icon">&#xe605;</i>' +
+                        '</span>' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small o-close">' +
+                        '<i class="layui-icon">&#x1006;</i>' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<i class="check">更换qq</i>' +
+                        '</li>' +
+                        '<li class="clear o-wechat">' +
+                        '<span class="tit">微信</span>' +
+                        '<div class="con">' +
+                        '<input type="text" value="绑定微信接收验证码" disabled>' +
+                        '<div class="layui-btn-group">' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small o-edit">' +
+                        '<i class="layui-icon">&#xe605;</i>' +
+                        '</span>' +
+                        '<span class="layui-btn layui-btn-primary layui-btn-small o-close">' +
+                        '<i class="layui-icon">&#x1006;</i>' +
+                        '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '<i class="check-bind-wechat"><a href="javascript:void(0);" style="color:#6699cc">绑定</a></i>' +
+                        '</li>' +
+                        '</ul>' +
+                        '<a class="login-quit">退出</a>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+
+                    $('.option-box').html(userInfoBox);
+                    gks.operationTaskNumber();
+                    gks.operationMessageNumber();
+                    gks.addOperationQQ();
+
+                    //头部搜索
+                    var i = 0;
+                    if (window.location.href.indexOf('gongkongsaas') >= 0 && window.location.href.indexOf('b.gongkongsaas') < 0) {
+                        var operaFlag = true;
+                    }else{
+                        var operaFlag = false;
+                    }
+                    function operationHeaderSearch(event) {
+                        var event = window.event || event;
+
+                        if (!$(".operation-header-v1 .header-search-input").is(":focus")) {
+                            return false;
+                        }
+
+                        var val = $('.operation-header-v1 .header-search-input').val();
+
+                        if (val.trim() != '') {
+                            $(".operation-header-v1 .header-close-icon img").show();
+                            var leng = $('.operation-header-v1 .header-search-box li').length;
+                            if (event.keyCode == 13) {
+                                if ($('.operation-header-v1 .header-search-box').find('li.actived').length > 0) {
+                                    var $li = $('.operation-header-v1 .header-search-box').find('li.actived');
+                                    if($($li).attr("data-type") == "order"){
+                                        if($($li).find(".the-btns").attr('data-btn-type') == '1'){
+                                            var documentNo = $($li).find(".the-title").text();
+                                            var documentType = $($li).find(".the-title").attr("data-document-type");
+                                            var platform = $($li).find(".the-title").attr("data-platform") == 'true'?1:0;
+                                            var shopId = $($li).find(".the-title").attr("data-shop-id");
+                                            var url = '/report/module/common-flow-chart?documentNo='+documentNo+'&documentType='+documentType+'&platform='+platform + '&shopId='+shopId;
+                                            if(window.location.href.indexOf('/report/module/common-flow-chart') >= 0){
+                                                window.open(url, "_self")
+                                            }else {
+                                                window.open(url)
+                                            }
+                                        }else{
+                                            var url = $($li).find("a").attr('data-link');
+                                            window.open(url)
+                                        }
+                                    }else{
+                                        var url = $('.operation-header-v1 .header-search-box').find('li.actived').find("a").attr('href');
+                                        window.open(url)
+                                    }
+                                    searchBlur();
+                                    $('.operation-header-v1 .header-search-input').focus();
+                                    return false;
+                                }
+                            }
+
+                            if (event.keyCode == 40) {
+
+                                i++;
+                                if ($('.operation-header-v1 .header-search-box li').eq(i).hasClass("group-title")) {
+                                    i += 1
+                                }
+                                if (i >= leng) {
+                                    i = 1;
+                                }
+                                keyTopBottom(i);
+                                return false;
+                            } else if (event.keyCode == 38) {
+                                i--;
+                                if ($('.operation-header-v1 .header-search-box li').eq(i).hasClass("group-title")) {
+                                    i -= 1
+                                }
+                                if (i <= 0) {
+                                    i = leng - 1;
+                                }
+                                keyTopBottom(i);
+                                return false;
+                            } else if(event.keyCode == 9){
+                                return false;
+                            }
+
+                            if (event.keyCode != 38 && event.keyCode != 40 && event.keyCode != 37 && event.keyCode != 39) {
+                                $.get('/acl/menu/fuzzy-query-menu-and-help-centre-knowledge-by-name?name=' + encodeURIComponent(val.trim()), function (result) {
+                                    var data = result.data;
+                                    var menusHtml = '';
+                                    var helpCenterHtml = '';
+                                    var menuDtos = data.menuDtos?data.menuDtos:[];
+                                    var helpCentreElasticSearchDtos = data.helpCentreElasticSearchDtos?data.helpCentreElasticSearchDtos:[];
+                                    var documentSyncDtos = data.documentSyncDtos?data.documentSyncDtos:[]; // 单号
+                                    if (data) {
+                                        $('.operation-header-v1 .header-search-box').show();
+
+                                        if(documentSyncDtos.length >= 3 && menuDtos.length >= 3 && helpCentreElasticSearchDtos.length >= 3){
+                                            menuDtos = menuDtos.splice(0, 3);
+                                            helpCentreElasticSearchDtos = helpCentreElasticSearchDtos.splice(0, 3);
+                                            var documentLen = 10 - helpCentreElasticSearchDtos.length - menuDtos.length;
+                                            documentSyncDtos = documentSyncDtos.splice(0, documentLen)
+                                        }else if((menuDtos.length == 0 && documentSyncDtos.length >= 5 && helpCentreElasticSearchDtos.length >= 5)
+                                            ||(helpCentreElasticSearchDtos.length == 0 && documentSyncDtos.length >= 5 && menuDtos.length >= 5)){
+                                            menuDtos = menuDtos.splice(0, 5);
+                                            helpCentreElasticSearchDtos = helpCentreElasticSearchDtos.splice(0, 5);
+                                            var documentLen = menuDtos.length == 0 ? (10 - helpCentreElasticSearchDtos.length) : (10 - menuDtos.length);
+                                            documentSyncDtos = documentSyncDtos.splice(0, documentLen);
+                                        }else {
+                                            var documentLen = menuDtos.length == 0 ? (10 - helpCentreElasticSearchDtos.length) : (10 - menuDtos.length);
+                                            documentSyncDtos = documentSyncDtos.splice(0, documentLen);
+                                        }
+
+                                        var orderLiHtml = '';
+                                        if(documentSyncDtos && documentSyncDtos.length > 0){
+                                            orderLiHtml = '<li class="group-title document-title">单号</li>';
+                                            $.each(documentSyncDtos, function (i, e) {
+                                                if(operaFlag && e.shopId != 9){
+                                                    var detailUrl = '';
+                                                }else if(!operaFlag && e.shopId == 9){
+                                                    var detailUrl = '';
+                                                }else{
+                                                    if(e.documentType != 1 && e.documentType != 2 && !e.documentId){
+                                                        var detailUrl = '';
+                                                    }else {
+                                                        if (e.documentType == 10) {
+                                                            var detailUrl = getOrderDetailUrl(e.platform, e.documentType, e.documentNo, e.documentSignId);
+                                                        } else {
+                                                            var detailUrl = getOrderDetailUrl(e.platform, e.documentType, e.documentNo, e.documentId);
+                                                        }
+                                                    }
+                                                }
+                                                orderLiHtml += '<li data-type="order"><a href="javaScript:void(0);" data-link="' + detailUrl + '">' +
+                                                    '<span class="the-title" data-id="'+ e.documentId +'" data-document-type="'+ e.documentType +'" data-shop-id="'+ e.shopId +'" data-platform="'+ e.platform +'">' + e.documentNo+'</span>' +
+                                                    '<span class="the-product">'+ e.documentTypeText +'</span>' +
+                                                    '<span class="the-btns" data-btn-type="1">' +
+                                                    '   <button class="layui-btn layui-btn-small flow-btn active" data-btn-type="1">查流程</button>' +
+                                                    (detailUrl == "" ? '' : '   <button class="layui-btn layui-btn-small detail-btn" data-btn-type="2">查详情</button>') +
+                                                    '</span>' +
+                                                    '</a></li>';
+                                            })
+                                        }
+
+                                        var menusLiHtml = '';
+                                        if (menuDtos.length > 0) {
+                                            menusHtml = '<li class="group-title menus-title">菜单入口</li>';
+                                            $.each(menuDtos, function (i, e) {
+                                                menusLiHtml += '<li><a href="' + e.url + '"   target="_blank"><span class="the-title">' + e.name + '</span><span class="the-product">' + e.parentName + '</span></a></li>'
+                                            });
+                                            menusHtml += menusLiHtml;
+
+                                        }
+                                        var helpCenterLiHtml = '';
+                                        if (helpCentreElasticSearchDtos.length > 0) {
+                                            helpCenterHtml = '<li class="group-title helpCenter-title">帮助中心</li>';
+                                            $.each(helpCentreElasticSearchDtos, function (i, e) {
+                                                var url;
+                                                var type = e.type;
+                                                if (type == 1) {
+                                                    //    常见问题
+                                                    url = '/help/help/help-issue-detail?id=' + e.issueDetailId + '&categoryId=' + e.secondCategoryId
+                                                } else {
+                                                    //    操作手册
+                                                    url = '/help/help/help-operation-index?categoryId=' + e.secondCategoryId + '&type=2'
+                                                }
+                                                helpCenterLiHtml += '<li><a href="' + url + '"  target="_blank"><span class="the-title">' + e.problemName + '</span><span class="the-product">' + e.firstName + '</span></a></li>'
+                                            });
+                                            helpCenterHtml += helpCenterLiHtml
+                                        }
+                                        $('.operation-header-v1 .search-box-list').html(menusHtml + helpCenterHtml + orderLiHtml);
+                                    }
+                                    if (menuDtos.length == 0 && helpCentreElasticSearchDtos.length == 0 && documentSyncDtos.length == 0) {
+                                        $('.operation-header-v1 .search-box-list').html('<div class="group-title">没有找到相关内容</div>');
+                                    }
+                                });
+                            }
+                        } else {
+                            i = 0;
+                            $('.operation-header-v1 .header-search-box').hide();
+                            $(".operation-header-v1 .header-close-icon img").hide();
+                        }
+                        $(document).off('keydown').keydown(function (event) {
+                            if(event.keyCode == 9){
+                                event.preventDefault();
+                            }
+                        })
+                    }
+
+                    function keyTopBottom(i) {
+                        $('.operation-header-v1 .header-search-box li').eq(i).addClass('actived').siblings().removeClass('actived');
+                        $('.operation-header-v1 .header-search-input').val($('.operation-header-v1 .header-search-box li').eq(i).find(".the-title").text());
+                    }
+
+                    function searchBlur() {
+                        i = 0;
+                        $('.operation-header-v1 .header-search-box').hide();
+                        $('.operation-header-v1 .header-search-box ul').html('');
+                    }
+
+                    $('.operation-header-v1 .header-search-input').blur(function (event) {
+                        $('.operation-header-v1 .header-search-box').undelegate('li', 'click').delegate('li', 'click', function () {
+                            $('.operation-header-v1 .header-search-input').val($(this).find(".the-title").text());
+                            if($(this).attr("data-type") == "order"){
+                                if($(this).find(".the-btns").attr('data-btn-type') == '1'){
+                                    var documentNo = $(this).find(".the-title").text();
+                                    var documentType = $(this).find(".the-title").attr("data-document-type");
+                                    var platform = $(this).find(".the-title").attr("data-platform") == 'true'?1:0;
+                                    var shopId = $(this).find(".the-title").attr("data-shop-id");
+                                    var url = '/report/module/common-flow-chart?documentNo='+documentNo+'&documentType='+documentType+'&platform='+platform+'&shopId='+shopId;
+                                    window.open(url);
+                                }else{
+                                    var url = $(this).find("a").attr('data-link');
+                                    window.open(url)
+                                }
+                            }
+                            searchBlur();
+                            $('.operation-header-v1 .header-search-input').focus();
+                            event.preventDefault();
+                        });
+
+                        $(document).click(function () {
+                            searchBlur();
+                            event.preventDefault();
+                        });
+                    });
+                    $('.operation-header-v1 .header-search-input').bind({
+                        keyup: operationHeaderSearch,
+                        click: operationHeaderSearch
+                    });
+                    $(".operation-header-v1 .header-close-icon").on("click", function () {
+                        $(".header-search-input").val("");
+                        $(".header-search-input").focus();
+                        $(".operation-header-v1 .header-close-icon img").hide();
+                    });
+                    $(".operation-header-v1 .header-close-icon").hover(function () {
+                        $(this).find("img").attr("src", "/static/images/operation-header-close2.png")
+                    }, function () {
+                        $(this).find("img").attr("src", "/static/images/operation-header-close1.png")
+                    })
+
+                    // tab键切换 查流程/查详情 按钮
+                    $('.operation-header-v1 .header-search-input').on('keydown', function (ev) {
+                        if(ev.keyCode == 9){
+                            if($('.operation-header-v1 .header-search-box').find('li.actived').attr('data-type') == 'order'){
+                                var $li = $('.operation-header-v1 .header-search-box').find('li.actived');
+                                var btnType = $($li).find('.the-btns').attr('data-btn-type');
+                                if(btnType == 1){
+                                    $($li).find('.the-btns .detail-btn').addClass('active').siblings().removeClass('active');
+                                    $($li).find('.the-btns').attr('data-btn-type', 2)
+                                }else{
+                                    $($li).find('.the-btns .flow-btn').addClass('active').siblings().removeClass('active');
+                                    $($li).find('.the-btns').attr('data-btn-type', 1)
+                                }
+                                ev.preventDefault();
+                            }
+                        }
+                    });
+                    $('body').delegate('.operation-header-v1 .header-search-box .the-btns button', 'mouseover', function (ev) {
+                        var btnType = $(this).attr('data-btn-type');
+                        $(this).addClass("active").siblings().removeClass("active");
+                        $(this).parent(".the-btns").attr('data-btn-type', btnType);
+                        ev.stopPropagation();
+                    });
+                    // 单据号详情链接
+                    function getOrderDetailUrl(platform, type, val, id) {
+                        var blankUrl = '';
+                        switch (type) {
+                            case 1: // 订单号
+                                if(platform){
+                                    blankUrl = '/porder/operation/show-details?orderNo='+val
+                                }else{
+                                    blankUrl = '/order/operation/show-details?orderNo='+ val +'&type=2'
+                                }
+                                break;
+                            case 2: // 售后单号
+                                if(platform){
+                                    blankUrl = '/p-after-sales/model-return/model-return-detail?afterSalesNum='+val;
+                                }else{
+                                    blankUrl = '/after-sales/model-return/model-return-detail?afterSalesNum='+val
+                                }
+                                break;
+                            case 3: // 付款单号
+                                if(platform){
+                                    blankUrl = '/pfinance/purchase-payment/purchase-payment-detail-financial?id='+ id
+                                }else{
+                                    blankUrl = '/finance/purchase-payment/v3/purchase-payment-detail-index?id='+ id
+                                }
+                                break;
+                            case 4: // 支付单号
+                                break;
+                            case 5: // 请购单号
+                                if(platform){
+                                    blankUrl = '/ppurchase/purchase-apply/detail-index-new?applyNo='+val
+                                }else{
+                                    blankUrl = '/purchase/purchase-apply/v3/index?applyNo='+val
+                                }
+                                break;
+                            case 6: // 采购单号
+                                if(platform) {
+                                    blankUrl = '/ppurchase/purchase/show-purchase-detail?purchaseId=' + id;
+                                }else{
+                                    blankUrl = '/purchase/purchase/show-purchase-detail?purchaseId='+ id;
+                                }
+                                break;
+                            case 7: // 采购退货单号
+                                if(platform) {
+                                    blankUrl = '/ppurchase/purchase-revert/show-purchase-revert-info?purchaseRevertId=' + id
+                                }else{
+                                    blankUrl = '/purchase/purchase-revert/show-purchase-revert-info?purchaseRevertId=' + id
+                                }
+                                break;
+                            case 8: // 入库单号
+                                blankUrl = '/inventory/stock-in/pre-detail-stock-in?id='+ id +'&type=50';
+                                break;
+                            case 9: // 收票单号 单号+状态+制单人+创建时间
+                                if(platform){
+                                    blankUrl = '/pfinance/invoice-in/invoice-in-detail-financial?isNew=true&id='+ id
+                                }else{
+                                    blankUrl = '/finance/invoice-in/v3/view-invoice-in-detail?id='+ id
+                                }
+                                break;
+                            case 10: // 出库单号
+                                // blankUrl = '/order/operation/show-details?orderNo=20190920223324'
+                                blankUrl = '/inventory/stock-out/pre-detail-stock-out?signId=' + id;
+                                break;
+                            case 11: // 开票单号
+                                if(platform){
+                                    blankUrl = '/pfinance/invoice-out/search-invoice-out-financial?isNew=true&id='+ id
+                                }else{
+                                    blankUrl = '/finance/invoice-out/v3/view-invoice-out-detail?id='+ id
+                                }
+                                break;
+                            case 12: // 寄售单号
+                                if(platform) {
+                                    blankUrl = '/consignment/operation/show-detail?delegateNo=' + val;
+                                }else{
+                                    blankUrl = '/consignment/delegate-detail/show-detail?delegateNo=' + val;
+                                }
+                                break;
+                            case 13: // 结算单号
+                                blankUrl = '/consignment/settlement-detail/show-detail?settlementId='+ id;
+                                break;
+                            case 14: // 快递单号
+                                break;
+                            case 15: // 供应商合同号
+                                break;
+                            case 16: // 汇票单号
+                                break;
+                            case 17: // 银行卡号
+                                break;
+                            case 18: // 自定义合同号
+                                break;
+                            case 19: // 发票号
+                                break;
+                            case 0: // 未定义
+                                break;
+                        }
+                        return blankUrl;
+                    }
+
+                    //右侧图标
+                    $('.help-box-hd').click(function () {
+                        var pathName = window.location.pathname;
+                        $.get('/help/help/redirect-operation-manual?url=' + pathName, function (result) {
+                            if (result.data != null) {
+                                var helpAlertBox = '<div class="help-alert-box">' +
+                                    '<em>操作简介：</em>' +
+                                    '<p>' + result.data.summary + '</p>' +
+                                    '<div class="more"><a href="/help/help/help-operation-index?url=' + pathName + '" target="_black">查看更多</a></div>' +
+                                    '</div>';
+
+                                layui.layer.open({
+                                    title: '帮助',
+                                    type: 1,
+                                    content: helpAlertBox
+                                });
+                            }
+                        });
+                    });
+                    $('.operation-header-v1 .login-quit').click(function () {
+                        var ticket = gks.getCookie('ticket');
+                        $.post('/user/session/login-out', {'ticket': ticket}, function (data) {
+                            if (data.code == 0) {
+                                var exp = new Date();
+                                exp.setTime(exp.getTime() - 1);
+                                var cval = gks.getCookie('ticket');
+                                if (cval != null) {
+                                    document.cookie = "ticket=" + cval + ";domain=.gongkongsaas.com;path=/;expires=" + exp.toGMTString();
+                                }
+                                if (window.location.href.indexOf('gongkongsaas') < 0 || window.location.href.indexOf('b.gongkongsaas') >= 0) {
+                                    window.location.href = '/user/operation/pre-login';
+                                } else {
+                                    window.location.href = '/user/employee/pre-login';
+                                }
+
+                            }
+                        });
+                    });
+                    $(".operation-header-v1 .check-password").click(function () {
+                        layer.open({
+                            title: '修改密码',
+                            type: 1,
+                            content: '<div class="unbind-reset-pwd" style="margin-top: 25px;">' +
+                                '<form class="layui-form" lay-filter="myFrom" id="myFrom"><input type="hidden" id="id" name="id" value=""/>' +
+                                '<div class="layui-form-item add-mobile"><div class="layui-form-item">' +
+                                '<label class="layui-form-label">原密码<span style="color:red;padding-left: 3px;">*</span></label><div class="layui-input-inline">' +
+                                '<input type="password" name="unbindOldPassword" id="unbindOldPassword" autocomplete="off" class="layui-input"></div></div>' +
+                                '<div class="layui-form-item"><label class="layui-form-label">新密码<span style="color:red;padding-left: 3px;">*</span></label>' +
+                                '<div class="layui-input-inline">' +
+                                '<input type="password" name="unbindNewPassword" id="unbindNewPassword" autocomplete="off" class="layui-input"></div></div></div></form>' +
+                                '</div>',
+                            area: ['300px', '230px'],
+                            shade: 0,
+                            btn: ['保存', '取消'],
+                            success: function () {
+                                /**
+                                 *   功能：设置input的验证规则
+                                 *   参数：
+                                 *      config：{object}
+                                 *          el：元素
+                                 *          triggerCheck：{object}
+                                 *              'onblur'：[{'functionName': string, errorDescripion: string },....]
+                                 *
+                                 *
+                                 * */
+                                function checkInput(config) {
+
+                                    if (!config.el) {
+                                        return;
+                                    }
+
+                                    var triggerCheck = config.triggerCheck;
+                                    if (typeof triggerCheck === 'object') {
+
+                                        for (var i in triggerCheck) {
+
+                                            $(config.el).on(i, function () {
+                                                var that = this,
+                                                    checks = triggerCheck[i].length;
+                                                for (var j = 0; j < checks; j++) {
+                                                    var functionName = triggerCheck[i][j].functionName,
+                                                        errorDescripion = triggerCheck[i][j].errorDescripion;
+                                                    if (functionName(that)) {
+                                                        //  验证通过，则继续
+                                                        continue;
+                                                    } else {
+                                                        // 提示错误信息
+                                                        layer.msg(errorDescripion, {icon: 0});
+                                                        break;
+                                                    }
+                                                }
+                                            });
+
+                                        }
+
+                                    }
+                                }
+
+                                var checkRule = {
+                                    checkBlank: function (el) {
+                                        var val = $(el).val()
+                                        valLength = val.length;
+                                        if (valLength !== 0) {
+                                            if (val[valLength - 1].includes(' ')) {
+                                                $(el).val(val.trim());
+                                                return false;
+                                            }
+                                        }
+                                        return true;
+                                    },
+
+                                };
+                                checkInput({
+                                    el: '#unbindOldPassword,#unbindNewPassword',
+                                    triggerCheck: {
+                                        'input': [{
+                                            functionName: checkRule.checkBlank,
+                                            errorDescripion: '不能输入空格等空白字符'
+                                        }],
+                                    }
+                                });
+                            },
+                            yes: function (index,layero) {
+                                console.log(layero)
+                                var oldPasswordInput=layero.find("#unbindOldPassword");
+                                var newPasswordInput=layero.find("#unbindNewPassword");
+                                var oldPassword = oldPasswordInput.val();
+                                if (oldPassword == null || oldPassword == undefined || oldPassword == '') {
+                                    layer.msg("原密码不能为空", {icon: 0});
+                                    return;
+                                }
+                                var newPassword =newPasswordInput.val();
+                                // if (newPassword == null || newPassword == undefined || newPassword == '') {
+                                //     layer.msg("新密码不能为空",{icon: 0});
+                                //     return;
+                                // }
+                                // if (newPassword.length < 6 || newPassword.length > 18) {
+                                //     layer.msg("长度必须为6-18位",{icon: 0});
+                                //     return;
+                                // }
+                                if (oldPassword == newPassword) {
+                                    layer.msg("新密码不能和原密码相同", {icon: 0});
+                                    return;
+                                }
+                                var loginName = $('.o-username input').attr('data-con');
+                                if (!checkPassword(newPassword, loginName)) {
+                                    layer.msg("请输入6-18位字符的密码！", {icon: 0});
+                                    return;
+                                }
+
+                                function checkPassword(password, loginName) {
+
+                                    if (!password || password.indexOf(" ") >= 0 || password.length < 6 || password.length > 18) {
+                                        return false;
+                                    }
+
+                                    /*if(password[0].charCodeAt() > password[1].charCodeAt()){
+                                        for (var i = 1; i < password.length; i++)
+                                        {
+                                            if (parseInt(password[i - 1].charCodeAt()) != parseInt(password[i].charCodeAt()) + parseInt(1)){
+                                                return false;
+                                            }
+                                        }
+                                    }else {
+                                        for (var i = 1; i < password.length; i++){
+                                            if (parseInt(password[i].charCodeAt()) != parseInt(password[i - 1].charCodeAt()) + parseInt(1)) {
+                                                return false;
+                                            }
+                                        }
+                                    }*/
+                                    return true;
+                                }
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/user/shop-account/reset-password',
+                                    data: {
+                                        "oldPassword": oldPassword,
+                                        "newPassword": newPassword
+                                    },
+                                    dataType: 'JSON',
+                                    success: function (data) {
+                                        if (data.code == 0) {
+                                            layer.msg("修改成功! 请重新登录!",{icon: 1},function () {
+                                                window.parent.location.reload();
+                                            });
+                                            layer.close(index);
+                                        }
+                                        else {
+                                            layer.msg(data.message,{icon: 0});
+                                        }
+                                    },
+                                    error: function () {
+                                        console.log("发生异常");
+                                    }
+                                });
+                            }
+                        });
+                    });
+                    $('.operation-header-v1 .name').mouseenter(function () {
+                        var $this = $(this);
+                        var qrCodeUrl = "/user/we-chat/scan-qr-code?callBackReturnUrl=" + window.location.pathname;
+                        if ($this.attr('data-mouse')) {
+                            // 如果已经请求一次不需要再请求了
+                        } else {
+                            $.ajax({
+                                type: "post",
+                                url: "/user/shop-account/get-user-info",
+                                dataType: "json",
+                                success: function (result) {
+                                    if (result.code == 0) {
+                                        if (result.data.weChatLoginOpen) {
+                                            // 如果绑定了微信
+                                            if (result.data.bindWeChat == true) {
+                                                $('.o-wechat a').text('解绑');
+                                                $('.o-wechat a').attr('href', '');
+                                                $('.o-wechat a').on('click', function () {
+                                                    layer.confirm('你确定要解绑吗？', {btn: ['确定', '取消']}, function (index) {
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/user/we-chat/cancel-binding',
+                                                            dataType: 'JSON',
+                                                            success: function (data) {
+                                                                if (data.code == 0) {
+                                                                    layer.msg("解绑成功");
+                                                                    layer.close(index);
+                                                                    window.parent.location.reload();
+                                                                }
+                                                                else {
+                                                                    layer.msg(data.message);
+                                                                }
+                                                            },
+                                                            error: function () {
+                                                                layer.msg("发生异常");
+                                                            }
+                                                        });
+                                                    });
+                                                    return false;
+                                                });
+                                            } else {
+                                                $('.o-wechat a').text('绑定');
+                                                $('.o-wechat a').attr('href', qrCodeUrl);
+                                            }
+                                        } else {
+                                            $('.o-wechat').remove();
+                                        }
+                                        // 保存用户类型
+                                        gks.userType = result.data.type;
+
+                                        $('.o-username input').val(result.data.loginname);
+                                        $('.o-username input').attr('data-con', result.data.loginname);
+                                        $('.o-realname input').val(result.data.realname);
+                                        $('.o-realname input').attr('data-con', result.data.realname);
+                                        $('.o-othername input').val(result.data.nickname);
+                                        $('.o-othername input').attr('data-con', result.data.nickname);
+                                        $('.o-party input').val(result.data.departmentName);
+                                        $('.o-party input').attr('data-con', result.data.departmentName);
+                                        if (result.data.roleDtoList != null) {
+                                            $('.o-role input').val(result.data.roleDtoList[0].name);
+                                            $('.o-role input').attr('data-con', result.data.roleDtoList[0].name);
+                                            $('.o-role input').attr('title', result.data.roleDtoList[0].rangeTypeName);
+                                        }
+                                        if (result.data.referralCode) {
+                                            $('.o-referralCode input').val(result.data.referralCode);
+                                            $('.o-referralCode').show();
+                                        } else {
+                                            $('.o-referralCode').hide();
+                                        }
+                                        $('.o-code input').val(result.data.referralCode);
+                                        $('.o-phone input').val(result.data.mobile);
+                                        $('.o-phone input').attr('data-con', result.data.mobile);
+                                        $('.o-email input').val(result.data.email);
+                                        $('.o-email input').attr('data-con', result.data.email);
+                                        $('.o-qq input').val(result.data.qq);
+                                        $('.o-qq input').attr('data-con', result.data.qq);
+                                        $('.login-out .fl').html('上次登录：' + result.data.lastLoginTime.replace("T", " "));
+
+                                        $this.attr('data-mouse', true);
+                                    } else {
+                                        console.log("操作失败！");
+                                    }
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    console.log("操作失败！");
+                                }
+                            });
+                        }
+
+                        $('.operation-header-v1 .name-box').show();
+                        $('.operation-header-v1 .check').click(function (event) {
+                            $(this).prev('.con').find('input').prop('disabled', false).css('border', '1px #e5e5e5 solid').focus();
+                            $(this).prev('.con').find('.layui-btn-group').show();
+                            $(this).hide();
+                            // event.preventDefault();
+                        });
+                    });
+                    $('.operation-header-v1 .name').mouseleave(function () {
+                        $('.operation-header-v1 .name-box').hide();
+                    });
+                    $(".operation-header").delegate('.o-realname .layui-btn-group span:eq(0)', "click", function () {
+                        console.log("修改名字")
+                        var $this = $(this);
+                        var ajaxVal = $(this).parents('.con').find('input').val();
+                        var userDto = {};
+                        userDto.realname = ajaxVal;
+                        $.ajax({
+                            type: "POST",
+                            url: "/user/shop-account/update-account-info",
+                            data: JSON.stringify(userDto),
+                            dataType: "json",
+                            contentType: 'application/json;charset=utf-8',
+                            success: function (result) {
+                                if (result.code == 0) {
+                                    $this.parent().hide();
+                                    $this.parent().prev().attr('data-con', $this.parent().prev().val()).prop('disabled', true).css('border', '1px #fff solid');
+                                    $this.parents('.con').next().show();
+                                    layer.msg("修改成功！");
+
+                                } else {
+                                    layer.msg(result.message);
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.log("修改失败！");
+                            }
+                        });
+
+                    })
+
+                    $('.operation-header-v1 .o-othername .layui-btn-group span').eq(0).click(function (event) {
+                        var $this = $(this);
+                        var ajaxVal = $(this).parents('.con').find('input').val();
+                        var userDto = {};
+                        userDto.nickname = ajaxVal;
+                        $.ajax({
+                            type: "POST",
+                            url: "/user/shop-account/update-account-info",
+                            data: JSON.stringify(userDto),
+                            dataType: "json",
+                            contentType: 'application/json;charset=utf-8',
+                            success: function (result) {
+                                if (result.code == 0) {
+                                    $this.parent().hide();
+                                    $this.parent().prev().attr('data-con', $this.parent().prev().val()).prop('disabled', true).css('border', '1px #fff solid');
+                                    $this.parents('.con').next().show();
+                                    layer.msg("修改成功！");
+                                } else {
+                                    layer.msg("修改失败！");
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.log("修改失败！");
+                            }
+                        });
+                    });
+
+                    $('.operation-header-v1 .o-phone .layui-btn-group span').eq(0).click(function (event) {
+                        var $this = $(this);
+                        var ajaxVal = $(this).parents('.con').find('input').val();
+                        var userDto = {};
+                        userDto.mobile = ajaxVal;
+                        $.ajax({
+                            type: "POST",
+                            url: "/user/shop-account/update-account-info",
+                            data: JSON.stringify(userDto),
+                            dataType: "json",
+                            contentType: 'application/json;charset=utf-8',
+                            success: function (result) {
+                                if (result.code == 0) {
+                                    $this.parent().hide();
+                                    $this.parent().prev().attr('data-con', $this.parent().prev().val()).prop('disabled', true).css('border', '1px #fff solid');
+                                    $this.parents('.con').next().show();
+                                    layer.msg("修改成功！");
+                                } else {
+                                    layer.msg("修改失败！");
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.log("修改失败！");
+                            }
+                        });
+                    });
+
+                    $('.operation-header-v1 .o-qq .layui-btn-group span').eq(0).click(function (event) {
+                        var $this = $(this);
+                        var ajaxVal = $(this).parents('.con').find('input').val();
+                        var r = /^\+?[1-9][0-9]*$/;
+                        if (!r.test(ajaxVal)) {
+                            layer.tips('请输入数字格式！', '.o-qq', {
+                                tips: [1, '#0FA6D8'] //还可配置颜色
+                            });
+                            return;
+                        }
+                        var userDto = {};
+                        userDto.qq = ajaxVal;
+                        $.ajax({
+                            type: "POST",
+                            url: "/user/shop-account/update-account-info",
+                            data: JSON.stringify(userDto),
+                            dataType: "json",
+                            contentType: 'application/json;charset=utf-8',
+                            success: function (result) {
+                                if (result.code == 0) {
+                                    $this.parent().hide();
+                                    $this.parent().prev().attr('data-con', $this.parent().prev().val()).prop('disabled', true).css('border', '1px #fff solid');
+                                    $this.parents('.con').next().show();
+                                    layer.msg("修改成功！");
+                                } else {
+                                    layer.msg("修改失败！");
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.log("修改失败！");
+                            }
+                        });
+                    });
+
+                    $('.operation-header-v1 .o-email .layui-btn-group span').eq(0).click(function (event) {
+                        var $this = $(this);
+                        var ajaxVal = $(this).parents('.con').find('input').val();
+                        var userDto = {};
+                        userDto.email = ajaxVal;
+                        $.ajax({
+                            type: "POST",
+                            url: "/user/shop-account/update-account-info",
+                            data: JSON.stringify(userDto),
+                            dataType: "json",
+                            contentType: 'application/json;charset=utf-8',
+                            success: function (result) {
+                                if (result.code == 0) {
+                                    $this.parent().hide();
+                                    $this.parent().prev().attr('data-con', $this.parent().prev().val()).prop('disabled', true).css('border', '1px #fff solid');
+                                    $this.parents('.con').next().show();
+                                    layer.msg("修改成功！");
+                                } else {
+                                    layer.msg("修改失败！");
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                console.log("修改失败！");
+                            }
+                        });
+                    });
+
+                    $('.operation-header-v1 .con .o-close').click(function (event) {
+                        var oldVal = $(this).parent().prev().attr('data-con');
+                        $(this).parent().prev().val(oldVal).prop('disabled', true).css('border', '1px #fff solid');
+                        $(this).parent().hide();
+                        $(this).parent().parent().next().show();
+                    });
+                };
+
+                gks.appendOperationHeaderOptionV1();
+            });
+        </script>
+        <#include "header-v1.ftl">
+        <div class="main-wrap-v1">
+            <#include "aside-v1.ftl">
+            <article class="operation-content-v1">
+                <div><#nested></div>
+            </article>
+        </div>
+
+<#--        <#include "left.ftl">-->
+<#--        <div class="layui-tab layui-tab-brief" lay-filter="demoTitle">-->
+<#--        &lt;#&ndash;<#include "../../workQueue/aside.ftl">&ndash;&gt;-->
+<#--            <div class="layui-body gks_body_bg">-->
+<#--                <div class="layui-main">-->
+<#--                    <div class="inner">-->
+<#--                        <div class="gks_body_box">-->
+<#--                        &lt;#&ndash; 内容开始 &ndash;&gt;-->
+<#--                                <#nested>-->
+<#--                            <div class="clear"></div>-->
+<#--                        &lt;#&ndash; 内容结束 &ndash;&gt;-->
+<#--                        </div>-->
+<#--                    </div>-->
+<#--                </div>-->
+<#--            </div>-->
+<#--        </div>-->
+    </#if>
+</div>
+<#-- 导入尾部资源 -->
+<#if (footer_url!='')>
+    <#include "${footer_url}">
+</#if>
+<script type="text/javascript">
+    var basePath = "${basePath}";
+    layui.use(['layer', 'adminGlobalTwo', 'form'],function() {
+        var layer = layui.layer, gksTwo = layui.adminGlobalTwo, $ = layui.jquery;
+        gksTwo.admin();
+    })
+</script>
+</body>
+</html>
+</#macro>
